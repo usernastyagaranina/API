@@ -1,0 +1,834 @@
+{
+	"info": {
+		"_postman_id": "40b43a50-5547-4595-864f-182d70c85cb7",
+		"name": "DemoShopping",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38501104"
+	},
+	"item": [
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Returns a list of all products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/products"
+					},
+					"response": []
+				},
+				{
+					"name": "Add a new product",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,400]);\r",
+									"});\r",
+									"});\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Products111s\",\n  \"description\": \"This is a products111s.\",\n  \"price\": 9009200,\n  \"category\": \"Electronics\",\n  \"manufacturer\": \"Manufacturer\",\n  \"imageUrl\": \"http://products111s.com/image.jpg\",\n  \"freeShipping\": true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/add-product"
+					},
+					"response": []
+				},
+				{
+					"name": "Product search by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 404]);\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/products/id/2535"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete product by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200,403,404]);\r",
+									"});\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/id/{{productId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"id",
+								"{{productId}}"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "2143",
+									"description": "Уникальный идентификатор продукта",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update items by ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"price\": 11144310,\n  \"category\": \"string\",\n  \"manufacturer\": \"string\",\n  \"imageUrl\": \"meow\",\n  \"freeShipping\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/id/{{productId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"id",
+								"{{productId}}"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "2143",
+									"description": "Уникальный идентификатор продукта",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Partial product update by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Content-Type is present\", function () {\r",
+									"    pm.response.to.have.header(\"Content-Type\");\r",
+									"});\r",
+									"pm.test(\"Response time is less than 1000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 400,404]);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"string\",\r\n    \"description\":\"string\",\r\n    \"price\":1133431,\r\n    \"category\":\"string\",\r\n    \"manufacturer\":\"string\",\r\n    \"imageUrl\":\"string\",\r\n    \"freeShipping\":false\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products/id/{{productId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"id",
+								"{{productId}}"
+							],
+							"query": [
+								{
+									"key": "productId",
+									"value": "2143",
+									"description": "Уникальный идентификатор продукта",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search products by category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/FindByCategory/?category=laptops",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"FindByCategory",
+								""
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "laptops",
+									"description": "Категория продукта"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search products by manufacturer",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/FindByManufacturer/?manufacturer=huawei",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"FindByManufacturer",
+								""
+							],
+							"query": [
+								{
+									"key": "manufacturer",
+									"value": "huawei",
+									"description": "Производитель продукта"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search product by ShippingFee",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/FindByShipping/?freeShipping=true",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"FindByShipping",
+								""
+							],
+							"query": [
+								{
+									"key": "freeShipping",
+									"value": "true",
+									"description": "Наличие бесплатной доставки(true/false)"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search products by filters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/filter?category=laptops&manufacturer=apple&freeShipping=true&minPrice=100&maxPrice=2000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "category",
+									"value": "laptops",
+									"description": "Категория продукта"
+								},
+								{
+									"key": "manufacturer",
+									"value": "apple",
+									"description": "Производитель продукта"
+								},
+								{
+									"key": "freeShipping",
+									"value": "true",
+									"description": "Наличие бесплатной доставки(true/false)"
+								},
+								{
+									"key": "minPrice",
+									"value": "100",
+									"description": "Минимальная цена"
+								},
+								{
+									"key": "maxPrice",
+									"value": "2000",
+									"description": "Максимальная цена"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Users authorization",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"{{username}}\",\r\n    \"password\":\"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Users registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{username}}\",\r\n\t\t\"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/register"
+					},
+					"response": []
+				},
+				{
+					"name": "Add a new users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"{{username}}\",\r\n    \"password\":\"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Getting information about users(login and user_id)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/users"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user from system",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{baseUrl}}/users/{{userId}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cart",
+			"item": [
+				{
+					"name": "Adding an item to your cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productId\":{{productId}},\r\n    \"quantity\":12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/cart"
+					},
+					"response": []
+				},
+				{
+					"name": "Information about items in the cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/getCart"
+					},
+					"response": []
+				},
+				{
+					"name": "Updates the number of items in the cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\":11\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/cart/{{cartItemId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Removing items from the cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{baseUrl}}/cart/{{cartItemId}}"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Complete list of user orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/user-orders"
+					},
+					"response": []
+				},
+				{
+					"name": "Creating an order and moving it to cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": "{{baseUrl}}/orders"
+					},
+					"response": []
+				},
+				{
+					"name": "Removing items from order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/2115/products/2389",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"2115",
+								"products",
+								"2389"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "",
+									"description": "Идентификатор заказа",
+									"disabled": true
+								},
+								{
+									"key": "productId",
+									"value": "",
+									"description": "Идентификатор товара",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Changing the quantity of items in an order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"quantity\": 12\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/2116/products/2389",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"2116",
+								"products",
+								"2389"
+							],
+							"query": [
+								{
+									"key": "orderId",
+									"value": "",
+									"description": "Идентификатор заказа",
+									"disabled": true
+								},
+								{
+									"key": "productId",
+									"value": "",
+									"description": "Идентификатор товара",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Total amount of orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"url": "{{baseUrl}}/update-orders-total"
+					},
+					"response": []
+				},
+				{
+					"name": "Information about paid orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/api/orders-history"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Payment for user orders",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"card_type\":\"VISA\",\r\n    \"card_code\": \"8820354696467284\",\r\n    \"expiry_month\": 12,\r\n    \"expiry_year\": 26,\r\n    \"cvv\":\"123\",\r\n    \"email\": \"garanina-2000@inbox.ru\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/pay"
+					},
+					"response": []
+				},
+				{
+					"name": "Update card and PayPal balance",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{baseUrl}}/updateBalances"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://qa.demoshopping.ru",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "Test123",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "Test1111",
+			"type": "string"
+		},
+		{
+			"key": "productId",
+			"value": "2535",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "782",
+			"type": "string"
+		},
+		{
+			"key": "token ",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzgyLCJpYXQiOjE3MjcxODI2NzIsImV4cCI6MTczNTgyMjY3Mn0.EFukLA-CH4Io0RTxCc8IIV7W_UOCUZhBG-9Tf0owMtY",
+			"type": "string"
+		},
+		{
+			"key": "cartItemId",
+			"value": "7069",
+			"type": "string"
+		},
+		{
+			"key": "orderId",
+			"value": "2113",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}
